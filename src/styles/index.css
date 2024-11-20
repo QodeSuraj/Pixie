@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+.email_section {
+  position: relative;
+}
+
+.email_section::before {
+  content: "";
+  border-bottom: 1px solid #ddd;
+  height: 1px;
+  position: absolute;
+  width: 25%;
+  left: 0;
+  top: 19px;
+}
+
+.email_section::after {
+  content: "";
+  border-bottom: 1px solid #ddd;
+  height: 1px;
+  position: absolute;
+  width: 25%;
+  right: 0;
+  top: 19px;
+}
+
+.dashboard_chevron_down.fa-solid:before {
+  width: 5px;
+}
+
+.active_tab {
+  position: relative;
+}
+
+.active_tab::after {
+  content: "";
+  position: absolute;
+  right: 0;
+}
+
+@media screen and (max-width: 575px) {
+  .email_section::before {
+    content: "";
+    border-bottom: 1px solid #ddd;
+    height: 1px;
+    position: absolute;
+    width: 20%;
+    left: 0;
+    top: 19px;
+  }
+
+  .email_section::after {
+    content: "";
+    border-bottom: 1px solid #ddd;
+    height: 1px;
+    position: absolute;
+    width: 20%;
+    right: 0;
+    top: 19px;
+  }
+}
