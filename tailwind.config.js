@@ -15,10 +15,15 @@ module.exports = {
         btn_hover: "#16a085",
         dashboard_border: "#EAEAEA",
         black: "#000",
+        app_nav_color: "#3d3d3d",
+        storage_color: "#f4faf6",
       },
 
       fontFamily: {
         monsterrat: ["Montserrat", "sans-serif"],
+      },
+      gridTemplateColumns: {
+        gridDashboard: "300px minmax(0, 1fr)", // Sidebar (300px) + Main Content (remaining space)
       },
     },
   },
