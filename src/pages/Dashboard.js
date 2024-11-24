@@ -17,14 +17,14 @@ const navItems = [
 const CollectionItem = ({ title, image, link }) => (
   <Link
     to={link}
-    className="collection flex gap-3 items-center hover:bg-slate-100 pl-6 pr-4 py-2 lg:py-4 md:py-2"
+    className="collection flex gap-3 items-center hover:bg-slate-100 pl-2 pr-2 py-2 lg:py-4 lg:pl-6 lg:pr-4 md:py-2"
   >
     <img
       src={image}
       className="w-5 lg:flex md:hidden sm:hidden xs:hidden"
       alt=""
     />
-    <h4 className="app-nav-title text-sm lg:text-md md:text-sm sm:text-sm font-normal text-app_nav_color">
+    <h4 className="app-nav-title text-xs lg:text-md md:text-sm sm:text-sm font-medium text-app_nav_color">
       {title}
     </h4>
   </Link>
@@ -71,9 +71,9 @@ const DashboardPage = () => {
   return (
     <div className="dashboard grid lg:grid-cols-gridDashboard md:grid-cols-mobilegridDashborad font-monsterrat">
       {/* Left Sidebar */}
-      <div className="left_side flex flex-col lg:gap-12 md:gap-0 bg-light-400 border-r-2 gap-x-5 border-dashboard_border lg:min-h-lvh md:min-h-full sticky">
+      <div className="left_side flex flex-col lg:gap-12 md:gap-0 bg-light-400 border-r-0 lg:border-r-2 md:border-r-0 sm:border-r-0 gap-x-5 border-dashboard_border lg:min-h-lvh md:min-h-full sticky">
         {/* Category Section */}
-        <div className="category_section flex justify-between pl-6 pr-4 py-2 lg:py-4 md:py-4 sm:py-2 md:bg-dashboard_border sm:bg-dashboard_border">
+        <div className="category_section flex justify-between pl-6 pr-4 py-2 lg:py-4 md:py-4 sm:py-2 lg:bg-white md:bg-dashboard_border sm:bg-dashboard_border">
           <div className="flex items-center gap-2">
             <img src={clientProfile} className="w-5" alt="" />
             <p className="font-semibold text-xs active_tab">Client Gallery</p>
@@ -102,7 +102,7 @@ const DashboardPage = () => {
           </div>
         </div>
 
-        <div className="app-nav flex lg:flex-col md:py-2 sm:py-2">
+        <div className="app-nav flex lg:flex-col md:py-2 sm:py-2 justify-between md:justify-between sm:justify-between">
           {navItems.map((item, index) => (
             <CollectionItem
               key={index}
@@ -146,14 +146,14 @@ const DashboardPage = () => {
       {/* End of Left Content/Sidebar */}
 
       {/* Right Content */}
-      <div className="right_side px-6 py-4">
+      <div className="right_side px-6 py-4 pt-16">
         <div className="flex flex-col align-center justify-center gap-8">
           {/* Intro Section */}
           <div className="flex flex-col">
             <p className="text-sm font-normal text-small_text text-center mb-2">
               Get Started
             </p>
-            <p className="text-xl font-medium text-black text-center mb-4">
+            <p className="text-2xl  font-medium text-black text-center mb-4">
               Create beautiful photo collections in 3 steps
             </p>
 
