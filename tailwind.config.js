@@ -23,7 +23,8 @@ module.exports = {
         monsterrat: ["Montserrat", "sans-serif"],
       },
       gridTemplateColumns: {
-        gridDashboard: "300px minmax(0, 1fr)", // Sidebar (300px) + Main Content (remaining space)
+        gridDashboard: "300px minmax(0, 1fr)",
+        mobilegridDashborad: "repeat(1,minmax(0,1fr))",
       },
     },
   },

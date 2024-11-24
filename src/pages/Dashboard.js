@@ -6,7 +6,6 @@ import folderIcon from "../assets/images/icons/folder-image.svg";
 import starIcon from "../assets/images/icons/star-icon.svg";
 import browserIcon from "../assets/images/icons/browser-icon.svg";
 import settingIcon from "../assets/images/icons/settings-icon.svg";
-import plusIcon from "../assets/images/icons/plus-icon.svg";
 
 const navItems = [
   { title: "Collections", image: folderIcon, link: "#" },
@@ -18,10 +17,14 @@ const navItems = [
 const CollectionItem = ({ title, image, link }) => (
   <Link
     to={link}
-    className="collection flex gap-3 items-center hover:bg-slate-100 pl-6 pr-4 py-4"
+    className="collection flex gap-3 items-center hover:bg-slate-100 pl-6 pr-4 py-2 lg:py-4 md:py-2"
   >
-    <img src={image} className="w-5" alt="" />
-    <h4 className="app-nav-title text-md font-normal text-app_nav_color">
+    <img
+      src={image}
+      className="w-5 lg:flex md:hidden sm:hidden xs:hidden"
+      alt=""
+    />
+    <h4 className="app-nav-title text-sm lg:text-md md:text-sm sm:text-sm font-normal text-app_nav_color">
       {title}
     </h4>
   </Link>
@@ -66,11 +69,11 @@ const DashboardPage = () => {
   const [totalSpace, setTotalSpace] = useState(100);
 
   return (
-    <div className="dashboard grid grid-cols-gridDashboard font-monsterrat">
+    <div className="dashboard grid lg:grid-cols-gridDashboard md:grid-cols-mobilegridDashborad font-monsterrat">
       {/* Left Sidebar */}
-      <div className="left_side flex flex-col gap-12 bg-light-400 border-r-2 gap-x-5 border-dashboard_border min-h-lvh sticky">
+      <div className="left_side flex flex-col lg:gap-12 md:gap-0 bg-light-400 border-r-2 gap-x-5 border-dashboard_border lg:min-h-lvh md:min-h-full sticky">
         {/* Category Section */}
-        <div className="category_section flex justify-between pl-6 pr-4 py-4">
+        <div className="category_section flex justify-between pl-6 pr-4 py-2 lg:py-4 md:py-4 sm:py-2 md:bg-dashboard_border sm:bg-dashboard_border">
           <div className="flex items-center gap-2">
             <img src={clientProfile} className="w-5" alt="" />
             <p className="font-semibold text-xs active_tab">Client Gallery</p>
@@ -99,7 +102,7 @@ const DashboardPage = () => {
           </div>
         </div>
 
-        <div className="app-nav flex flex-col">
+        <div className="app-nav flex lg:flex-col md:py-2 sm:py-2">
           {navItems.map((item, index) => (
             <CollectionItem
               key={index}
@@ -110,7 +113,7 @@ const DashboardPage = () => {
           ))}
         </div>
 
-        <div className="storage_section ml-6 mr-4 mb-4 block mt-auto">
+        <div className="storage_section ml-6 mr-4 mb-4 lg:block mt-auto  md:hidden sm:hidden xs:hidden">
           <div className=" bg-storage_color px-5 py-3 rounded-lg sticky bottom-0">
             <Link to="#">
               <div className="flex items-center gap-2">
