@@ -6,6 +6,9 @@ import folderIcon from "../assets/images/icons/folder-image.svg";
 import starIcon from "../assets/images/icons/star-icon.svg";
 import browserIcon from "../assets/images/icons/browser-icon.svg";
 import settingIcon from "../assets/images/icons/settings-icon.svg";
+import ProfileDialog from "../components/ProfileDailogBox";
+import NotificationDialog from "../components/NotificationDailog";
+import HelpDialog from "../components/HelpDailogBox";
 
 const navItems = [
   { title: "Collections", image: folderIcon, link: "#" },
@@ -72,7 +75,7 @@ const DashboardPage = () => {
   const [totalSpace, setTotalSpace] = useState(100);
 
   const toggleDialog = (dialogType) => {
-    setActiveDialog((prev) => (prev === dialogType ? null : dialogType));
+    setActiveDialog((prev) => (prev === dialogType ? "" : dialogType));
   };
 
   const handleNotification = () => {
@@ -104,164 +107,35 @@ const DashboardPage = () => {
             </svg>
           </div>
           <div className="flex items-center gap-3 relative">
-            <div className="relative ">
-              <i
-                className="fa-regular fa-circle-question cursor-pointer "
-                onClick={() => toggleDialog("help")}
-              ></i>
-
-              {activeDialog === "help" && (
-                <div className="absolute right-0 mt-6 bg-white shadow-lg  py-4 w-72 z-10">
-                  <div className="flex flex-col gap-4  w-full ">
-                    <div className="hover:bg-gray-200 ">
-                      <div className="relative">
-                        <input
-                          type="text"
-                          placeholder="Search..."
-                          className="pl-10 pr-4 py-2  w-full focus:outline-none focus:border-transparent"
-                        />
-                        <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-                          <i className="fas fa-search"></i>
-                        </span>
-                      </div>
-                    </div>
-                    <div className="hover:bg-gray-200 ">
-                      <div className="flex flex-col mx-4 py-2">
-                        <h3 className=" text-[13px]">
-                          Getting Started with Client Gallery
-                        </h3>
-                        <p className="text-[10px] text-gray-600">
-                          loremkdgfkjdsgf
-                        </p>
-                      </div>
-                    </div>
-                    <div className="hover:bg-gray-200 ">
-                      <div className="flex flex-col mx-4 py-2">
-                        <h3 className=" text-[13px] ">
-                          Getting Started with Client Gallery
-                        </h3>
-                        <p className="text-[10px] text-gray-600">
-                          loremkdgfkjdsgf
-                        </p>
-                      </div>
-                    </div>
-                    <div className="hover:bg-gray-200 ">
-                      <div className="flex flex-col mx-4 py-2">
-                        <h3 className=" text-[13px]">
-                          Getting Started with Client Gallery
-                        </h3>
-                        <p className="text-[10px] text-gray-600">
-                          loremkdgfkjdsgf
-                        </p>
-                      </div>
-                    </div>
-                    <div className="">
-                      <h3 className="px-3 text-gray-800 text-[13px] underline py-4 cursor-pointer">
-                        Browser Help Contact
-                      </h3>
-                    </div>
-                    <div className="hover:bg-gray-200 py-4 ">
-                      <div className="flex items-center justify-center   ">
-                        <h3 className=" text-[10px]">
-                          {" "}
-                          <i className="fas fa-comment-dots"></i> Contact Us
-                        </h3>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className="relative">
-              <i
-                className="fa-regular fa-bell cursor-pointer "
-                onClick={() => toggleDialog("notifications")}
-              ></i>
-              {activeDialog === "notifications" && (
-                <div className="absolute right-0 lg:-left-56 mt-6 bg-white shadow-lg shadow-gray-300 p-4 w-72 z-10  ">
-                  <div className="flex items-center justify-between py-4">
-                    <h4 className="font-semibold text-gray-800">
-                      Notifications
-                    </h4>
-                    <div className="relative">
-                      <h4
-                        className=" text-bold cursor-pointer"
-                        onClick={() => handleNotification()}
-                      >
-                        ...
-                      </h4>
-                      {activeNotifaction && (
-                        <div className="absolute -left-24  mt-14 bg-white shadow-lg shadow-gray-300 p-4 w-44 z-10  ">
-                          <div className="flex items-center justify-between py-4">
-                            <h4 className="font-semibold text-gray-800">
-                              Notifications
-                            </h4>
-                            <div className="relative"></div>
-                          </div>
-                          <hr></hr>
-                          <div className="flex items-center justify-center py-2 text-[12px]">
-                            <p>You have no notification</p>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <hr></hr>
-                  <div className="flex items-center justify-center py-4 text-[12px]">
-                    <p>You have no notification</p>
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className="relative ">
-              <p
-                className="w-8 h-8 font-bold text-xs text-center rounded-full bg-slate-100 flex items-center justify-center cursor-pointer hover:border-2 border-link "
-                onClick={() => toggleDialog("profile")}
-              >
-                S
-              </p>
-              {activeDialog === "profile" && (
-                <div className="absolute right-0 mt-4 bg-white py-4 w-60 z-10 shadow-lg shadow-gray-400 rounded-lg">
-                  <div className="flex flex-col  gap-2">
-                    <div className="flex items-center gap-4 px-4">
-                      <div className="w-12 h-12 flex items-center justify-center bg-gray-300 rounded-full">
-                        <h2 className="text-2xl text-green-400">S</h2>
-                      </div>
-                      <div className="text-sm text-gray-500">
-                        <p className="font-semibold text-black">Ram Katwal</p>
-                        <p className="text-xs">ram@gmail.com</p>
-                      </div>
-                    </div>
-                    <div className="py-2 hover:bg-gray-200 w-full flex justify-center cursor-pointer">
-                      <p className="text-[14px] text-black ">
-                        Invite Friends & get
-                        <span className=""> $20</span>
-                      </p>
-                    </div>
-                    <hr></hr>
-
-                    <ul className="w-full text-gray-600 flex flex-col  text-[12px] ">
-                      <li className="py-2 px-14  hover:bg-gray-200 cursor-pointer ">
-                        Profile
-                      </li>
-                      <li className="py-2 px-14  hover:bg-gray-200 cursor-pointer ">
-                        Account
-                      </li>
-                      <li className="py-2 px-14  hover:bg-gray-200 cursor-pointer ">
-                        Billing
-                      </li>
-                      <li className="py-2 px-14 hover:bg-gray-200 cursor-pointer ">
-                        Advance Settings
-                      </li>
-                      <li className="py-2 px-14 hover:bg-gray-200 cursor-pointer ">
-                        Logout
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
+      <div className="relative group">
+        <i
+          className="fa-regular fa-circle-question cursor-pointer"
+          onClick={() => toggleDialog("help")}
+        ></i>
+        <HelpDialog activeDialog={activeDialog} toggleDialog={toggleDialog} />
+      </div>
+      <div className="relative group">
+        <i
+          className="fa-regular fa-bell cursor-pointer"
+          onClick={() => toggleDialog("notifications")}
+        ></i>
+        <NotificationDialog
+          activeDialog={activeDialog}
+          toggleDialog={toggleDialog}
+          activeNotifaction={activeNotifaction}
+          handleNotification={handleNotification}
+        />
+      </div>
+      <div className="relative">
+        <p
+          className="w-8 h-8 font-bold text-xs text-center rounded-full bg-slate-100 flex items-center justify-center cursor-pointer hover:border-2 border-link"
+          onClick={() => toggleDialog("profile")}
+        >
+          S
+        </p>
+        <ProfileDialog activeDialog={activeDialog} toggleDialog={toggleDialog} />
+      </div>
+    </div>
         </div>
 
         <div className="app-nav flex lg:flex-col md:py-2 sm:py-2 justify-between md:justify-between sm:justify-between">
