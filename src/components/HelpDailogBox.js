@@ -9,7 +9,7 @@ const HelpDialog = ({ activeDialog, toggleDialog }) => {
               </div>
 
               {activeDialog === "help" && (
-                <div className="absolute right-0 mt-6 bg-white shadow-lg  py-4 w-72 z-10">
+                <div className="absolute -left-44 right-0 mt-6 bg-white shadow-lg  py-4 w-[350px] z-10">
                   <div className="flex flex-col gap-4  w-full ">
                     <div className="hover:bg-gray-200 ">
                       <div className="relative">

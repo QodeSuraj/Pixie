@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useRef,useEffect} from "react";
 import { Link } from "react-router-dom";
 import DashboardBanner from "../assets/images/dashboard banner.jpg";
 import clientProfile from "../assets/images/profile_images/client_gallery_profile.png";
@@ -74,6 +74,8 @@ const DashboardPage = () => {
   const [usedSpace, setUsedSpace] = useState(0);
   const [totalSpace, setTotalSpace] = useState(100);
 
+  const dialogRef = useRef(null);
+
   const toggleDialog = (dialogType) => {
     setActiveDialog((prev) => (prev === dialogType ? "" : dialogType));
   };
@@ -81,6 +83,21 @@ const DashboardPage = () => {
   const handleNotification = () => {
     setActiveNotifaction(!activeNotifaction);
   };
+
+  // Close the dialog when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dialogRef.current && !dialogRef.current.contains(event.target)) {
+        setActiveDialog("");
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="dashboard grid lg:grid-cols-gridDashboard md:grid-cols-mobilegridDashborad font-monsterrat">
       {/* Left Sidebar */}
@@ -88,7 +105,7 @@ const DashboardPage = () => {
         {/* Category Section */}
         <div className="category_section flex justify-between pl-6 pr-4 py-2 lg:py-4 md:py-4 sm:py-2 lg:bg-white md:bg-dashboard_border sm:bg-dashboard_border">
           <div className="flex items-center gap-2">
-            <img src={clientProfile} className="w-5" alt="" />
+            <img src={clientProfile} className="w-5" alt="Client Profile" />
             <p className="font-semibold text-xs active_tab">Client Gallery</p>
             <svg
               className="svg-inline--fa fa-angle-down w-2"
@@ -107,37 +124,38 @@ const DashboardPage = () => {
             </svg>
           </div>
           <div className="flex items-center gap-3 relative">
-      <div className="relative group">
-        <i
-          className="fa-regular fa-circle-question cursor-pointer"
-          onClick={() => toggleDialog("help")}
-        ></i>
-        <HelpDialog activeDialog={activeDialog} toggleDialog={toggleDialog} />
-      </div>
-      <div className="relative group">
-        <i
-          className="fa-regular fa-bell cursor-pointer"
-          onClick={() => toggleDialog("notifications")}
-        ></i>
-        <NotificationDialog
-          activeDialog={activeDialog}
-          toggleDialog={toggleDialog}
-          activeNotifaction={activeNotifaction}
-          handleNotification={handleNotification}
-        />
-      </div>
-      <div className="relative">
-        <p
-          className="w-8 h-8 font-bold text-xs text-center rounded-full bg-slate-100 flex items-center justify-center cursor-pointer hover:border-2 border-link"
-          onClick={() => toggleDialog("profile")}
-        >
-          S
-        </p>
-        <ProfileDialog activeDialog={activeDialog} toggleDialog={toggleDialog} />
-      </div>
-    </div>
+            <div className="relative group" ref={dialogRef}>
+              <i
+                className="fa-regular fa-circle-question cursor-pointer"
+                onClick={() => toggleDialog("help")}
+              ></i>
+              <HelpDialog activeDialog={activeDialog} toggleDialog={toggleDialog} />
+            </div>
+            <div className="relative group" ref={dialogRef}>
+              <i
+                className="fa-regular fa-bell cursor-pointer"
+                onClick={() => toggleDialog("notifications")}
+              ></i>
+              <NotificationDialog
+                activeDialog={activeDialog}
+                toggleDialog={toggleDialog}
+                activeNotifaction={activeNotifaction}
+                handleNotification={handleNotification}
+              />
+            </div>
+            <div className="relative" ref={dialogRef}>
+              <p
+                className="w-8 h-8 font-bold text-xs text-center rounded-full bg-slate-100 flex items-center justify-center cursor-pointer hover:border-2 border-link"
+                onClick={() => toggleDialog("profile")}
+              >
+                S
+              </p>
+              <ProfileDialog activeDialog={activeDialog} toggleDialog={toggleDialog} />
+            </div>
+          </div>
         </div>
 
+        {/* Navigation Items */}
         <div className="app-nav flex lg:flex-col md:py-2 sm:py-2 justify-between md:justify-between sm:justify-between">
           {navItems.map((item, index) => (
             <CollectionItem
@@ -149,6 +167,7 @@ const DashboardPage = () => {
           ))}
         </div>
 
+        {/* Storage Section */}
         <div className="storage_section ml-6 mr-4 mb-4 lg:block mt-auto md:hidden sm:hidden xs:hidden">
           <div className="bg-storage_color px-5 py-3 rounded-lg sticky bottom-0">
             <Link to="#">
@@ -162,7 +181,7 @@ const DashboardPage = () => {
                     Storage
                   </h4>
                   <p className="text-xs text-app_nav_color">
-                    0 GB of 3 GB used
+                    {usedSpace} GB of {totalSpace} GB used
                   </p>
                 </div>
               </div>
@@ -188,9 +207,8 @@ const DashboardPage = () => {
               Get Started with Sample Photos
             </Link>
           </div>
-
           <div>
-            <img src={DashboardBanner} className="w-1/2 mx-auto" alt="" />
+            <img src={DashboardBanner} className="w-1/2 mx-auto" alt="Dashboard Banner" />
           </div>
         </div>
       </div>
