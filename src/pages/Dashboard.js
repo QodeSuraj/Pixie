@@ -1,7 +1,15 @@
-import React, { useState ,useRef,useEffect} from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import DashboardBanner from "../assets/images/dashboard banner.jpg";
 import clientProfile from "../assets/images/profile_images/client_gallery_profile.png";
+import Website from "../assets/images/profile_images/website_profile.png";
+
+import Store from "../assets/images/profile_images/product_profile.png";
+
+import StdioManager from "../assets/images/profile_images/studiomanager_profile.png";
+import MobileGallary from "../assets/images/profile_images/mobilegallery_profile.png";
+
+
 import folderIcon from "../assets/images/icons/folder-image.svg";
 import starIcon from "../assets/images/icons/star-icon.svg";
 import browserIcon from "../assets/images/icons/browser-icon.svg";
@@ -9,12 +17,46 @@ import settingIcon from "../assets/images/icons/settings-icon.svg";
 import ProfileDialog from "../components/ProfileDailogBox";
 import NotificationDialog from "../components/NotificationDailog";
 import HelpDialog from "../components/HelpDailogBox";
+import DropdownMenu from "../components/DropDownMenu";
 
 const navItems = [
   { title: "Collections", image: folderIcon, link: "#" },
   { title: "Starred", image: starIcon, link: "#" },
   { title: "Homepage", image: browserIcon, link: "#" },
   { title: "Settings", image: settingIcon, link: "#" },
+];
+const menuItems = [
+ 
+  {
+    icon: clientProfile,
+    title: "Client Gallery",
+    description:"somenthing is there"
+
+  },
+  {
+    icon: Website,
+    title: "Profile Settings",
+    description:"somenthing is there"
+
+  },
+  {
+    icon: Store,
+    title: "Logout",
+    description:"somenthing is there"
+
+  },
+  {
+    icon: StdioManager,
+    title: "Logout",
+    description:"somenthing is there"
+
+  },
+  {
+    icon: MobileGallary,
+    title: "Logout",
+    description:"somenthing is there"
+
+  },
 ];
 
 const CollectionItem = ({ title, image, link }) => (
@@ -70,9 +112,9 @@ const CircularStorageChart = ({ usedSpace, totalSpace }) => {
 const DashboardPage = () => {
   const [activeDialog, setActiveDialog] = useState("");
   const [activeNotifaction, setActiveNotifaction] = useState(false);
-
   const [usedSpace, setUsedSpace] = useState(0);
   const [totalSpace, setTotalSpace] = useState(100);
+  const [selectedMenu, setSelectedMenu] = useState(menuItems[0].title); // Default menu item
 
   const dialogRef = useRef(null);
 
@@ -82,6 +124,10 @@ const DashboardPage = () => {
 
   const handleNotification = () => {
     setActiveNotifaction(!activeNotifaction);
+  };
+
+  const handleMenuSelect = (item) => {
+    setSelectedMenu(item.title);
   };
 
   // Close the dialog when clicking outside
@@ -105,23 +151,11 @@ const DashboardPage = () => {
         {/* Category Section */}
         <div className="category_section flex justify-between pl-6 pr-4 py-2 lg:py-4 md:py-4 sm:py-2 lg:bg-white md:bg-dashboard_border sm:bg-dashboard_border">
           <div className="flex items-center gap-2">
-            <img src={clientProfile} className="w-5" alt="Client Profile" />
-            <p className="font-semibold text-xs active_tab">Client Gallery</p>
-            <svg
-              className="svg-inline--fa fa-angle-down w-2"
-              aria-hidden="true"
-              focusable="false"
-              data-prefix="fas"
-              data-icon="angle-down"
-              role="img"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 448 512"
-            >
-              <path
-                fill="currentColor"
-                d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
-              ></path>
-            </svg>
+            <DropdownMenu
+              options={menuItems}
+              onSelect={handleMenuSelect}
+              defaultValue={selectedMenu}
+            />
           </div>
           <div className="flex items-center gap-3 relative">
             <div className="relative group" ref={dialogRef}>
@@ -129,7 +163,10 @@ const DashboardPage = () => {
                 className="fa-regular fa-circle-question cursor-pointer"
                 onClick={() => toggleDialog("help")}
               ></i>
-              <HelpDialog activeDialog={activeDialog} toggleDialog={toggleDialog} />
+              <HelpDialog
+                activeDialog={activeDialog}
+                toggleDialog={toggleDialog}
+              />
             </div>
             <div className="relative group" ref={dialogRef}>
               <i
@@ -150,7 +187,10 @@ const DashboardPage = () => {
               >
                 S
               </p>
-              <ProfileDialog activeDialog={activeDialog} toggleDialog={toggleDialog} />
+              <ProfileDialog
+                activeDialog={activeDialog}
+                toggleDialog={toggleDialog}
+              />
             </div>
           </div>
         </div>
@@ -208,7 +248,11 @@ const DashboardPage = () => {
             </Link>
           </div>
           <div>
-            <img src={DashboardBanner} className="w-1/2 mx-auto" alt="Dashboard Banner" />
+            <img
+              src={DashboardBanner}
+              className="w-1/2 mx-auto"
+              alt="Dashboard Banner"
+            />
           </div>
         </div>
       </div>
