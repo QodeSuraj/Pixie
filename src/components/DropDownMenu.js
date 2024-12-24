@@ -2,15 +2,19 @@ import React, { useState } from "react";
 
 const DropdownMenu = ({ options = [], onSelect, defaultValue }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("Dashboard");
+  const [selectedOption, setSelectedOption] = useState({
+    title: "Dashboard",
+    icon: "",
+  });
 
   const handleOptionClick = (option) => {
-    setSelectedOption(option.title);
+    setSelectedOption(option); // Store the entire selected option
     setIsOpen(false);
+    if (onSelect) onSelect(option); // Trigger the callback if provided
   };
 
   const handleDashboard = () => {
-    setSelectedOption("Dashboard");
+    setSelectedOption({ title: "Dashboard", icon: "" }); // Reset to Dashboard
     setIsOpen(false);
   };
 
@@ -19,10 +23,20 @@ const DropdownMenu = ({ options = [], onSelect, defaultValue }) => {
       <div>
         <button
           type="button"
-          className="inline-flex justify-between w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white   focus:outline-none"
+          className="inline-flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white focus:outline-none"
           onClick={() => setIsOpen(!isOpen)}
         >
-          {selectedOption === "Dashboard" ? "Dashboard" : selectedOption}
+          {selectedOption.icon && (
+            <img
+              src={selectedOption.icon}
+              alt="icon"
+              className="inline-block w-4 h-4 mr-1"
+            />
+          )}
+          <p className="text-xs">
+
+          {selectedOption.title}
+          </p>
           <svg
             className="w-5 h-5 ml-2 -mr-1 text-gray-500"
             xmlns="http://www.w3.org/2000/svg"
@@ -49,17 +63,15 @@ const DropdownMenu = ({ options = [], onSelect, defaultValue }) => {
                 onClick={() => handleOptionClick(option)}
               >
                 <div className="flex items-center gap-2">
+                  {option.icon && (
+                    <img
+                      src={option.icon}
+                      alt="icon"
+                      className="inline-block w-7 h-7"
+                    />
+                  )}
                   <div>
-                    {option.icon && (
-                      <img
-                        src={option.icon}
-                        alt="icon"
-                        className="inline-block w-7 h-7 mr-2"
-                      />
-                    )}
-                  </div>
-                  <div>
-                    <p className="text-xs">{option.title}</p>
+                    <p className="text-xs font-semibold">{option.title}</p>
                     <p className="text-[10px]">{option.description}</p>
                   </div>
                 </div>
@@ -69,7 +81,7 @@ const DropdownMenu = ({ options = [], onSelect, defaultValue }) => {
               <button className="flex items-center justify-center py-2">
                 <div className="flex gap-x-2">
                   <img src="" alt="" />
-                  <p className="text-gray-600 text-sm">View Dashobard</p>
+                  <p className="text-gray-600 text-sm">View Dashboard</p>
                 </div>
               </button>
             </div>
