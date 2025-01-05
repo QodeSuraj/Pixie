@@ -9,7 +9,6 @@ import Store from "../assets/images/profile_images/product_profile.png";
 import StdioManager from "../assets/images/profile_images/studiomanager_profile.png";
 import MobileGallary from "../assets/images/profile_images/mobilegallery_profile.png";
 
-
 import folderIcon from "../assets/images/icons/folder-image.svg";
 import starIcon from "../assets/images/icons/star-icon.svg";
 import browserIcon from "../assets/images/icons/browser-icon.svg";
@@ -26,36 +25,30 @@ const navItems = [
   { title: "Settings", image: settingIcon, link: "#" },
 ];
 const menuItems = [
- 
   {
     icon: clientProfile,
     title: "Client Gallery",
-    description:"somenthing is there"
-
+    description: "somenthing is there",
   },
   {
     icon: Website,
     title: "Profile Settings",
-    description:"somenthing is there"
-
+    description: "somenthing is there",
   },
   {
     icon: Store,
     title: "Logout",
-    description:"somenthing is there"
-
+    description: "somenthing is there",
   },
   {
     icon: StdioManager,
     title: "Logout",
-    description:"somenthing is there"
-
+    description: "somenthing is there",
   },
   {
     icon: MobileGallary,
     title: "Logout",
-    description:"somenthing is there"
-
+    description: "somenthing is there",
   },
 ];
 
@@ -111,30 +104,50 @@ const CircularStorageChart = ({ usedSpace, totalSpace }) => {
 
 const DashboardPage = () => {
   const [activeDialog, setActiveDialog] = useState("");
-  const [activeNotifaction, setActiveNotifaction] = useState(false);
+  const [activeNotification, setActiveNotification] = useState(false);
   const [usedSpace, setUsedSpace] = useState(0);
   const [totalSpace, setTotalSpace] = useState(100);
   const [selectedMenu, setSelectedMenu] = useState(menuItems[0].title); // Default menu item
 
-  const dialogRef = useRef(null);
+  const helpDialogRef = useRef(null);
+  const notificationDialogRef = useRef(null);
+  const profileDialogRef = useRef(null);
 
-  const toggleDialog = (dialogType) => {
-    setActiveDialog((prev) => (prev === dialogType ? "" : dialogType));
+  const toggleDialog = (dialogName) => {
+    if (activeDialog === dialogName) {
+      setActiveDialog(null);
+      setActiveNotification(false);
+    } else {
+      setActiveDialog(dialogName);
+    }
   };
 
   const handleNotification = () => {
-    setActiveNotifaction(!activeNotifaction);
+    setActiveNotification(!activeNotification);
   };
 
   const handleMenuSelect = (item) => {
     setSelectedMenu(item.title);
   };
 
-  // Close the dialog when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (dialogRef.current && !dialogRef.current.contains(event.target)) {
-        setActiveDialog("");
+      if (activeDialog && 
+          !(
+            (helpDialogRef.current && helpDialogRef.current.contains(event.target)) ||
+            (notificationDialogRef.current && notificationDialogRef.current.contains(event.target)) ||
+            (profileDialogRef.current && profileDialogRef.current.contains(event.target))
+          )
+      ) {
+        setActiveDialog(null);
+      }
+
+      if (
+        activeNotification &&
+        notificationDialogRef.current &&
+        !notificationDialogRef.current.contains(event.target)
+      ) {
+        setActiveNotification(false);
       }
     };
 
@@ -142,7 +155,8 @@ const DashboardPage = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [activeDialog, activeNotification]);
+
 
   return (
     <div className="dashboard grid lg:grid-cols-gridDashboard md:grid-cols-mobilegridDashborad font-monsterrat">
@@ -150,7 +164,7 @@ const DashboardPage = () => {
       <div className="left_side flex flex-col lg:gap-12 md:gap-0 bg-light-400 border-r-0 lg:border-r-2 md:border-r-0 sm:border-r-0 gap-x-5 border-dashboard_border lg:min-h-lvh md:min-h-full sticky">
         {/* Category Section */}
         <div className="category_section flex justify-between pl-6 pr-4 py-2 lg:py-4 md:py-4 sm:py-2 lg:bg-white md:bg-dashboard_border sm:bg-dashboard_border">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 w-[200px]">
             <DropdownMenu
               options={menuItems}
               onSelect={handleMenuSelect}
@@ -158,17 +172,18 @@ const DashboardPage = () => {
             />
           </div>
           <div className="flex items-center gap-3 relative">
-            <div className="relative group" ref={dialogRef}>
-              <i
-                className="fa-regular fa-circle-question cursor-pointer"
-                onClick={() => toggleDialog("help")}
-              ></i>
+            <div
+              onClick={() => toggleDialog("help")}
+              className="relative group"
+              ref={helpDialogRef}
+            >
+              <i className="fa-regular fa-circle-question cursor-pointer"></i>
               <HelpDialog
                 activeDialog={activeDialog}
                 toggleDialog={toggleDialog}
               />
             </div>
-            <div className="relative group" ref={dialogRef}>
+            <div className="relative group" ref={notificationDialogRef}>
               <i
                 className="fa-regular fa-bell cursor-pointer"
                 onClick={() => toggleDialog("notifications")}
@@ -176,11 +191,11 @@ const DashboardPage = () => {
               <NotificationDialog
                 activeDialog={activeDialog}
                 toggleDialog={toggleDialog}
-                activeNotifaction={activeNotifaction}
+                activeNotification={activeNotification}
                 handleNotification={handleNotification}
               />
             </div>
-            <div className="relative" ref={dialogRef}>
+            <div className="relative" ref={profileDialogRef}>
               <p
                 className="w-8 h-8 font-bold text-xs text-center rounded-full bg-slate-100 flex items-center justify-center cursor-pointer hover:border-2 border-link"
                 onClick={() => toggleDialog("profile")}
